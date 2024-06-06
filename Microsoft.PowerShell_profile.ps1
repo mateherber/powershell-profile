@@ -514,8 +514,6 @@ $($PSStyle.Foreground.Green)reload-profile$($PSStyle.Reset) - Reloads the curren
 
 $($PSStyle.Foreground.Green)unzip$($PSStyle.Reset) <file> - Extracts a zip file to the current directory.
 
-$($PSStyle.Foreground.Green)hb$($PSStyle.Reset) <file> - Uploads the specified file's content to a hastebin-like service and returns the URL.
-
 $($PSStyle.Foreground.Green)grep$($PSStyle.Reset) <regex> [dir] - Searches for a regex pattern in files within the specified directory or from the pipeline input.
 
 $($PSStyle.Foreground.Green)df$($PSStyle.Reset) - Displays information about volumes.
