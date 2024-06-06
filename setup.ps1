@@ -65,48 +65,11 @@ catch {
     Write-Error "Failed to install Oh My Posh. Error: $_"
 }
 
-# Font Install
-try {
-    [void] [System.Reflection.Assembly]::LoadWithPartialName("System.Drawing")
-    $fontFamilies = (New-Object System.Drawing.Text.InstalledFontCollection).Families.Name
-
-    if ($fontFamilies -notcontains "CaskaydiaCove NF") {
-        $webClient = New-Object System.Net.WebClient
-        $webClient.DownloadFileAsync((New-Object System.Uri("https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/CascadiaCode.zip")), ".\CascadiaCode.zip")
-        
-        while ($webClient.IsBusy) {
-            Start-Sleep -Seconds 2
-        }
-
-        Expand-Archive -Path ".\CascadiaCode.zip" -DestinationPath ".\CascadiaCode" -Force
-        $destination = (New-Object -ComObject Shell.Application).Namespace(0x14)
-        Get-ChildItem -Path ".\CascadiaCode" -Recurse -Filter "*.ttf" | ForEach-Object {
-            If (-not(Test-Path "C:\Windows\Fonts\$($_.Name)")) {        
-                $destination.CopyHere($_.FullName, 0x10)
-            }
-        }
-
-        Remove-Item -Path ".\CascadiaCode" -Recurse -Force
-        Remove-Item -Path ".\CascadiaCode.zip" -Force
-    }
-}
-catch {
-    Write-Error "Failed to download or install the Cascadia Code font. Error: $_"
-}
-
 # Final check and message to the user
 if ((Test-Path -Path $PROFILE) -and (winget list --name "OhMyPosh" -e) -and ($fontFamilies -contains "CaskaydiaCove NF")) {
     Write-Host "Setup completed successfully. Please restart your PowerShell session to apply changes."
 } else {
     Write-Warning "Setup completed with errors. Please check the error messages above."
-}
-
-# Choco install
-try {
-    Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
-}
-catch {
-    Write-Error "Failed to install Chocolatey. Error: $_"
 }
 
 # Terminal Icons Install
