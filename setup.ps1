@@ -109,12 +109,6 @@ catch {
     Write-Error "Failed to install Oh My Posh. Error: $_"
 }
 
-<<<<<<< HEAD
-# Font Install
-Install-NerdFonts -FontName "CascadiaCode" -FontDisplayName "CaskaydiaCove NF"
-
-=======
->>>>>>> 2d3fa31 (Update setup.ps1)
 # Final check and message to the user
 if ((Test-Path -Path $PROFILE) -and (winget list --name "OhMyPosh" -e) -and ($fontFamilies -contains "CaskaydiaCove NF")) {
     Write-Host "Setup completed successfully. Please restart your PowerShell session to apply changes."
